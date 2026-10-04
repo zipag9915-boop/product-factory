@@ -1,2 +1,41 @@
-# product-factory
-Product Factory is an Arabic RTL AI-powered product creation platform that transforms one business idea into a complete sellable product project, including brand identity, KDP book ideas, Shopify product ideas, SEO, marketing content, and downloadable project briefs.
+# 🏭 Product Factory
+
+## مصنع المنتجات الذكي
+
+**Product Factory** هو تطبيق ويب عربي RTL يحوّل فكرة مشروع أو منتج واحدة إلى مشروع منتجات متكامل قابل للتنفيذ والبيع.
+
+مثال:
+
+> حيوانات الغابة للأطفال
+
+يتحول إلى:
+
+- هوية علامة تجارية
+- اسم Brand
+- مفهوم البراند
+- الجمهور المستهدف
+- فرص المنتجات
+- حزمة كتاب Amazon KDP
+- أفكار منتجات Shopify
+- منتجات رقمية قابلة للتنزيل
+- أفكار Merch
+- عناوين وأوصاف المنتجات
+- كلمات SEO
+- أفكار محتوى تسويقي
+- خطة إطلاق خلال 7 أيام
+- Project Brief قابل للتنزيل
+
+---
+
+## ✨ الفكرة
+
+صاحب مشروع أو صانع محتوى يكتب فكرة بسيطة، ثم يقوم Product Factory بتحويلها إلى مشروع تجاري منظم.
+
+```text
+فكرة واحدة
+↓
+هوية علامة تجارية
+↓
+منتجات جاهزة للبيع
+↓
+تسويق + SEO + خطة إطلاق
