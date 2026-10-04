@@ -1,11 +1,3 @@
-[![GitHub license](https://img.shields.io/github/license/zipag9915-boop/product-factory)](https://github.com/zipag9915-boop/product-factory/blob/main/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/zipag9915-boop/product-factory?style=social)](https://github.com/zipag9915-boop/product-factory/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/zipag9915-boop/product-factory?style=social)](https://github.com/zipag9915-boop/product-factory/network/members)
-
-[![Language](https://img.shields.io/badge/language-HTML-orange.svg)](https://github.com/zipag9915-boop/product-factory)
-
-[![Project Status](https://img.shields.io/badge/status-active-success.svg)](https://github.com/zipag9915-boop/product-factory)
-
 # 🏭 Product Factory
 
 ## مصنع المنتجات الذكي
