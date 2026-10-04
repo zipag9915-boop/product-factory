@@ -1,1 +1,940 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Factory | مصنع المنتجات الذكي</title>
+  <meta name="description" content="حوّل فكرة واحدة إلى مشروع منتجات كامل جاهز للبيع.">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #070b16;
+      --surface: #10182b;
+      --surface-2: #17223b;
+      --border: #293858;
+      --text: #f3f5ff;
+      --muted: #a6b1ca;
+      --primary: #6d5efc;
+      --primary-dark: #4f46e5;
+      --accent: #22d3ee;
+      --success: #34d399;
+      --danger: #fb7185;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Cairo", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(109, 94, 252, .30), transparent 35%),
+        radial-gradient(circle at left 30%, rgba(34, 211, 238, .10), transparent 32%),
+        var(--bg);
+    }
+
+    .app {
+      width: min(1080px, 100%);
+      min-height: 100vh;
+      margin-inline: auto;
+      padding-inline: 16px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 66px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 11, 22, .88);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 8px 25px rgba(109, 94, 252, .35);
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .screen {
+      display: none;
+      padding: 28px 0 48px;
+      animation: appear .25s ease;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero {
+      max-width: 760px;
+      margin: 25px auto 0;
+      padding: 38px 0 25px;
+      text-align: center;
+    }
+
+    .pill,
+    .ready,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .pill {
+      padding: 6px 12px;
+      color: #dedaff;
+      border: 1px solid rgba(139, 123, 255, .40);
+      background: rgba(109, 94, 252, .15);
+    }
+
+    .ready {
+      padding: 5px 11px;
+      color: var(--success);
+      border: 1px solid rgba(52, 211, 153, .35);
+      background: rgba(52, 211, 153, .12);
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(30px, 8vw, 52px);
+      line-height: 1.4;
+      font-weight: 900;
+    }
+
+    h1 span {
+      color: var(--accent);
+    }
+
+    h2 {
+      margin: 8px 0 10px;
+      font-size: clamp(24px, 5vw, 34px);
+      font-weight: 900;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .lead {
+      max-width: 650px;
+      margin-inline: auto;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 12px 18px;
+      color: white;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      border: 0;
+      border-radius: 13px;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      box-shadow: 0 12px 28px rgba(109, 94, 252, .30);
+    }
+
+    .button:active {
+      transform: scale(.98);
+    }
+
+    .button.secondary {
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      box-shadow: none;
+    }
+
+    .button.small {
+      min-height: 38px;
+      padding: 8px 11px;
+      font-size: 12px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .card {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      background: linear-gradient(180deg, var(--surface), rgba(16, 24, 43, .78));
+    }
+
+    .form-card {
+      max-width: 700px;
+      margin-inline: auto;
+    }
+
+    label {
+      display: block;
+      margin-top: 17px;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 50px;
+      padding: 12px 14px;
+      color: var(--text);
+      font: inherit;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      outline: none;
+      background: var(--surface-2);
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(109, 94, 252, .18);
+    }
+
+    .form-actions,
+    .dashboard-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .dashboard-head {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 16px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+
+    .metric {
+      padding: 12px 7px;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--accent);
+      font-size: 21px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .list {
+      margin: 0;
+      padding-right: 20px;
+      color: var(--muted);
+    }
+
+    .list li {
+      margin-bottom: 8px;
+      line-height: 1.85;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .tag {
+      padding: 5px 10px;
+      color: #a5f3fc;
+      border: 1px solid rgba(34, 211, 238, .28);
+      background: rgba(34, 211, 238, .10);
+    }
+
+    .divider {
+      margin: 18px 0;
+      border: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-item {
+      margin-bottom: 10px;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .toast {
+      position: fixed;
+      right: 16px;
+      left: 16px;
+      bottom: 16px;
+      z-index: 99;
+      padding: 12px 15px;
+      text-align: center;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface-2);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, .35);
+      opacity: 0;
+      transform: translateY(15px);
+      transition: .25s;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      padding: 22px 0 30px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (min-width: 700px) {
+      .cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .form-actions,
+      .dashboard-actions {
+        flex-direction: row;
+      }
+
+      .dashboard-head {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <header>
+      <div class="brand">
+        <span class="logo">🏭</span>
+        <div>
+          Product Factory
+          <small>مصنع المنتجات الذكي</small>
+        </div>
+      </div>
+
+      <button class="button secondary small" id="projectsButton" type="button">
+        📊 مشاريعي
+      </button>
+    </header>
+
+    <section class="screen active" id="landing">
+      <div class="hero">
+        <span class="pill">✨ فكرة واحدة ← منتجات جاهزة للبيع</span>
+
+        <h1>
+          حوّل فكرتك إلى
+          <span>مشروع منتجات كامل</span>
+        </h1>
+
+        <p class="lead">
+          اكتب فكرة واحدة، وسينشئ Product Factory علامة تجارية، منتجات قابلة للبيع،
+          حزمة KDP، أفكار Shopify، محتوى تسويقي، كلمات SEO، وخطة إطلاق.
+        </p>
+
+        <div class="form-actions" style="justify-content:center">
+          <button class="button" id="startButton" type="button">
+            🚀 ابدأ مشروع جديد
+          </button>
+        </div>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <h3>📕 منتجات نشر</h3>
+          <p>كتب تلوين، Activity Books، وحزمة معلومات منظمة لـ KDP.</p>
+        </article>
+
+        <article class="card">
+          <h3>🛍️ منتجات بيع</h3>
+          <p>منتج رئيسي، Bundle، Upsell، ونسخة رقمية قابلة للتنزيل.</p>
+        </article>
+
+        <article class="card">
+          <h3>📈 نمو وتسويق</h3>
+          <p>SEO، Hooks، أفكار فيديو، وخطة إطلاق عملية خلال 7 أيام.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="screen" id="newProject">
+      <div class="card form-card">
+        <span class="pill">ابدأ من فكرة واحدة</span>
+        <h2>أنشئ مشروعًا جديدًا</h2>
+        <p>أدخل تفاصيل فكرتك واختر نموذج المصنع المناسب لها.</p>
+
+        <label for="idea">فكرة المشروع أو المنتج *</label>
+        <input id="idea" dir="auto" placeholder="مثال: حيوانات الغابة للأطفال">
+
+        <label for="audience">الجمهور المستهدف</label>
+        <input id="audience" dir="auto" placeholder="مثال: أولياء أمور الأطفال من 3 إلى 8 سنوات">
+
+        <label for="model">نموذج المشروع</label>
+        <select id="model">
+          <option value="علامة تجارية كاملة">🏷️ علامة تجارية كاملة</option>
+          <option value="حزمة كتاب KDP">📕 حزمة كتاب KDP</option>
+          <option value="منتجات Shopify">🛍️ منتجات Shopify</option>
+          <option value="منتجات رقمية">🎨 منتجات رقمية</option>
+          <option value="براند ميرش">👕 براند ميرش</option>
+        </select>
+
+        <label for="market">السوق الرئيسي</label>
+        <select id="market">
+          <option value="السوق العربي والخليجي">السوق العربي والخليجي</option>
+          <option value="السعودية">السعودية</option>
+          <option value="مصر">مصر</option>
+          <option value="الإمارات">الإمارات</option>
+          <option value="الولايات المتحدة">الولايات المتحدة</option>
+          <option value="عالمي">عالمي</option>
+        </select>
+
+        <div class="form-actions">
+          <button class="button" id="createButton" type="button">
+            🚀 أنشئ المشروع
+          </button>
+
+          <button class="button secondary" id="backButton" type="button">
+            رجوع
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="dashboard">
+      <div class="dashboard-head">
+        <div>
+          <span class="ready">● المشروع جاهز للتنفيذ</span>
+          <h2 id="brandName">اسم البراند</h2>
+          <p id="projectInfo"></p>
+        </div>
+
+        <div class="dashboard-actions">
+          <button class="button secondary small" id="downloadButton" type="button">
+            ⬇️ تنزيل Brief
+          </button>
+        </div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <strong id="productCount">0</strong>
+          <span>منتجات</span>
+        </div>
+
+        <div class="metric">
+          <strong id="keywordCount">0</strong>
+          <span>كلمات SEO</span>
+        </div>
+
+        <div class="metric">
+          <strong>7</strong>
+          <span>أيام إطلاق</span>
+        </div>
+      </div>
+
+      <article class="card">
+        <h3>🎨 هوية العلامة</h3>
+        <div id="brandConcept"></div>
+      </article>
+
+      <article class="card">
+        <h3>📕 حزمة كتاب KDP</h3>
+        <div id="kdpContent"></div>
+      </article>
+
+      <article class="card">
+        <h3>🛍️ المنتجات وفرص الربح</h3>
+        <ul class="list" id="productsList"></ul>
+      </article>
+
+      <article class="card">
+        <h3>📱 التسويق وخطة الإطلاق</h3>
+        <div id="marketingContent"></div>
+      </article>
+
+      <article class="card">
+        <h3>🔍 كلمات SEO</h3>
+        <div class="tags" id="keywordsList"></div>
+      </article>
+
+      <div class="form-actions">
+        <button class="button" id="newFromDashboardButton" type="button">
+          ➕ أنشئ مشروعًا آخر
+        </button>
+
+        <button class="button secondary" id="projectsFromDashboardButton" type="button">
+          📊 مشاريعي
+        </button>
+      </div>
+    </section>
+
+    <section class="screen" id="projects">
+      <div class="dashboard-head">
+        <div>
+          <span class="pill">📊 لوحة متابعة المشاريع</span>
+          <h2>مشاريعي</h2>
+          <p>المشاريع محفوظة محليًا على هذا الجهاز.</p>
+        </div>
+
+        <button class="button small" id="newFromProjectsButton" type="button">
+          ➕ مشروع جديد
+        </button>
+      </div>
+
+      <div id="projectsList"></div>
+    </section>
+
+    <footer>
+      Product Factory — MVP. لا يوجد الآن ربط حقيقي مع Amazon KDP أو Shopify أو الدفع أو حسابات المستخدمين.
+    </footer>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORAGE_KEY = "product_factory_projects_v1";
+    let currentProject = null;
+
+    const screens = document.querySelectorAll(".screen");
+
+    const startButton = document.getElementById("startButton");
+    const projectsButton = document.getElementById("projectsButton");
+    const createButton = document.getElementById("createButton");
+    const backButton = document.getElementById("backButton");
+    const downloadButton = document.getElementById("downloadButton");
+    const newFromDashboardButton = document.getElementById("newFromDashboardButton");
+    const projectsFromDashboardButton = document.getElementById("projectsFromDashboardButton");
+    const newFromProjectsButton = document.getElementById("newFromProjectsButton");
+
+    const ideaInput = document.getElementById("idea");
+    const audienceInput = document.getElementById("audience");
+    const modelInput = document.getElementById("model");
+    const marketInput = document.getElementById("market");
+
+    const brandName = document.getElementById("brandName");
+    const projectInfo = document.getElementById("projectInfo");
+    const productCount = document.getElementById("productCount");
+    const keywordCount = document.getElementById("keywordCount");
+    const brandConcept = document.getElementById("brandConcept");
+    const kdpContent = document.getElementById("kdpContent");
+    const productsList = document.getElementById("productsList");
+    const marketingContent = document.getElementById("marketingContent");
+    const keywordsList = document.getElementById("keywordsList");
+    const projectsList = document.getElementById("projectsList");
+    const toast = document.getElementById("toast");
+
+    function showScreen(screenId) {
+      screens.forEach(function(screen) {
+        screen.classList.remove("active");
+      });
+
+      document.getElementById(screenId).classList.add("active");
+
+      if (screenId === "projects") {
+        renderProjects();
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function createList(items) {
+      return items.map(function(item) {
+        return "<li>" + escapeHtml(item) + "</li>";
+      }).join("");
+    }
+
+    function createTags(items) {
+      return items.map(function(item) {
+        return '<span class="tag">' + escapeHtml(item) + "</span>";
+      }).join("");
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      setTimeout(function() {
+        toast.classList.remove("show");
+      }, 2400);
+    }
+
+    function getSavedProjects() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveProject(project) {
+      const projects = getSavedProjects();
+      projects.unshift(project);
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(projects.slice(0, 30))
+      );
+    }
+
+    function buildProject(input) {
+      const idea = input.idea;
+      const audience = input.audience || "العملاء المهتمون بهذه الفكرة";
+      const shortIdea = idea.split(/s+/).slice(0, 3).join(" ");
+      const suffixes = ["ستوديو", "لاب", "هاوس", "وورلد"];
+      const brand = shortIdea + " " + suffixes[Math.floor(Math.random() * suffixes.length)];
+
+      return {
+        id: "pf-" + Date.now(),
+        createdAt: new Date().toLocaleDateString("ar-EG"),
+        idea: idea,
+        audience: audience,
+        model: input.model,
+        market: input.market,
+        brandName: brand,
+        values: ["جودة", "إبداع", "بساطة", "قيمة حقيقية"],
+        products: [
+          "المنتج الأساسي: مجموعة " + idea + " — سعر مقترح 79 ر.س",
+          "عرض Bundle: باقة " + idea + " المميزة — سعر مقترح 149 ر.س",
+          "Upsell: إصدار فاخر أو محدود — سعر مقترح 199 ر.س",
+          "منتج رقمي: ملف PDF قابل للطباعة — سعر مقترح 29 ر.س"
+        ],
+        kdpPlan: [
+          "العنوان: " + idea + " — كتاب تلوين وأنشطة للأطفال",
+          "العنوان الفرعي: رحلة ممتعة للتعلم والإبداع والاستكشاف",
+          "المقاس المقترح: 8.5 × 11 بوصة",
+          "عدد الصفحات المقترح: 100 صفحة",
+          "المحتوى: 50 تصميمًا أو نشاطًا، تصميم واحد في كل وجه والظهر أبيض",
+          "الغلاف: عنوان واضح + تصميم جذاب + مساحة مناسبة للباركود",
+          "الملف النهائي لاحقًا: PDF Print عالي الدقة"
+        ],
+        keywords: [
+          idea,
+          "أفضل " + idea,
+          idea + " للأطفال",
+          idea + " هدية",
+          idea + " قابل للطباعة",
+          idea + " أونلاين",
+          idea + " متجر"
+        ],
+        marketing: [
+          "Hook للفيديو: هل تريد طريقة ممتعة وسهلة لاستخدام " + idea + "؟",
+          "Reel: اعرض المنتج خلال أول 3 ثوانٍ ثم أظهر النتيجة النهائية.",
+          "منشور: 3 أسباب تجعل هذا المنتج مناسبًا لـ " + audience + ".",
+          "قصة تفاعلية: تصويت بين تصميمين أو فكرتين للمنتج.",
+          "إعلان مباشر: منتج عملي، تصميم مميز، وهدية مثالية."
+        ],
+        launchPlan: [
+          "اليوم 1: مراجعة الاسم والعنوان والجمهور والكلمات المفتاحية.",
+          "اليوم 2: إنتاج 10 تصميمات أو صفحات أولية واختبار الجودة.",
+          "اليوم 3: تجهيز المنتج الأساسي والـ Bundle والنسخة الرقمية.",
+          "اليوم 4: إعداد أوصاف المنتجات وصور العرض.",
+          "اليوم 5: نشر أول 5 قطع محتوى قصيرة.",
+          "اليوم 6: إطلاق عرض افتتاحي محدود.",
+          "اليوم 7: مراجعة النتائج وتحسين العنوان والصور والسعر."
+        ]
+      };
+    }
+
+    function renderDashboard(project) {
+      currentProject = project;
+
+      brandName.textContent = project.brandName;
+
+      projectInfo.textContent =
+        "النموذج: " + project.model +
+        " • السوق: " + project.market +
+        " • الفكرة: " + project.idea;
+
+      productCount.textContent = project.products.length;
+      keywordCount.textContent = project.keywords.length;
+
+      brandConcept.innerHTML =
+        "<p><strong>فكرة العلامة:</strong> علامة تجارية متخصصة في «" +
+        escapeHtml(project.idea) +
+        "» تقدم منتجات جذابة وعملية تناسب " +
+        escapeHtml(project.audience) +
+        ".</p>" +
+        "<p><strong>وعد العلامة:</strong> تحويل تجربة العميل إلى منتج مفيد وممتع وسهل الشراء.</p>" +
+        "<p><strong>نبرة العلامة:</strong> ودودة، موثوقة، حديثة، وواضحة.</p>" +
+        '<div class="tags">' + createTags(project.values) + "</div>";
+
+      kdpContent.innerHTML =
+        "<p><strong>حزمة KDP المقترحة:</strong></p>" +
+        '<ul class="list">' + createList(project.kdpPlan) + "</ul>" +
+        "<p><strong>وصف بيع مقترح:</strong> كتاب عملي وممتع مستوحى من " +
+        escapeHtml(project.idea) +
+        "، مناسب كهدية واستخدام منزلي وتعليمي.</p>";
+
+      productsList.innerHTML = createList(project.products);
+
+      marketingContent.innerHTML =
+        "<p><strong>5 أفكار محتوى للانطلاق:</strong></p>" +
+        '<ul class="list">' + createList(project.marketing) + "</ul>" +
+        '<hr class="divider">' +
+        "<p><strong>خطة إطلاق خلال 7 أيام:</strong></p>" +
+        '<ul class="list">' + createList(project.launchPlan) + "</ul>";
+
+      keywordsList.innerHTML = createTags(project.keywords);
+    }
+
+    function renderProjects() {
+      const projects = getSavedProjects();
+
+      if (projects.length === 0) {
+        projectsList.innerHTML =
+          '<article class="card empty">' +
+          "<h3>لا توجد مشاريع حتى الآن</h3>" +
+          "<p>ابدأ مشروعك الأول وسيظهر هنا تلقائيًا.</p>" +
+          "</article>";
+        return;
+      }
+
+      projectsList.innerHTML = projects.map(function(project) {
+        return (
+          '<article class="card project-item">' +
+          "<h3>🏭 " + escapeHtml(project.brandName) + "</h3>" +
+          "<p>" + escapeHtml(project.idea) + "</p>" +
+          "<p><small>" +
+          escapeHtml(project.model) + " • " +
+          escapeHtml(project.market) + " • " +
+          escapeHtml(project.createdAt) +
+          "</small></p>" +
+          '<button class="button small open-project-button" data-project-id="' +
+          escapeHtml(project.id) +
+          '" type="button">فتح المشروع</button>' +
+          "</article>"
+        );
+      }).join("");
+
+      document.querySelectorAll(".open-project-button").forEach(function(button) {
+        button.addEventListener("click", function() {
+          openProject(button.dataset.projectId);
+        });
+      });
+    }
+
+    function openProject(projectId) {
+      const projects = getSavedProjects();
+
+      const project = projects.find(function(item) {
+        return item.id === projectId;
+      });
+
+      if (!project) {
+        showToast("لم يتم العثور على المشروع.");
+        return;
+      }
+
+      renderDashboard(project);
+      showScreen("dashboard");
+    }
+
+    function downloadBrief() {
+      if (!currentProject) {
+        showToast("أنشئ أو افتح مشروعًا أولًا.");
+        return;
+      }
+
+      const project = currentProject;
+
+      const text = [
+        "PRODUCT FACTORY — PROJECT BRIEF",
+        "",
+        "اسم البراند: " + project.brandName,
+        "الفكرة: " + project.idea,
+        "الجمهور: " + project.audience,
+        "النموذج: " + project.model,
+        "السوق: " + project.market,
+        "",
+        "المنتجات وفرص الربح:",
+        project.products.join("
+"),
+        "",
+        "خطة KDP:",
+        project.kdpPlan.join("
+"),
+        "",
+        "كلمات SEO:",
+        project.keywords.join("، "),
+        "",
+        "أفكار التسويق:",
+        project.marketing.join("
+"),
+        "",
+        "خطة الإطلاق:",
+        project.launchPlan.join("
+")
+      ].join("
+");
+
+      const blob = new Blob([text], {
+        type: "text/plain;charset=utf-8"
+      });
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "product-factory-brief.txt";
+      link.click();
+
+      URL.revokeObjectURL(url);
+
+      showToast("تم تنزيل Product Brief ✅");
+    }
+
+    startButton.addEventListener("click", function() {
+      showScreen("newProject");
+    });
+
+    projectsButton.addEventListener("click", function() {
+      showScreen("projects");
+    });
+
+    backButton.addEventListener("click", function() {
+      showScreen("landing");
+    });
+
+    createButton.addEventListener("click", function() {
+      const idea = ideaInput.value.trim();
+
+      if (!idea) {
+        showToast("اكتب فكرة المشروع أولًا.");
+        ideaInput.focus();
+        return;
+      }
+
+      const project = buildProject({
+        idea: idea,
+        audience: audienceInput.value.trim(),
+        model: modelInput.value,
+        market: marketInput.value
+      });
+
+      saveProject(project);
+      renderDashboard(project);
+      showScreen("dashboard");
+      showToast("تم إنشاء المشروع وحفظه ✅");
+    });
+
+    newFromDashboardButton.addEventListener("click", function() {
+      ideaInput.value = "";
+      audienceInput.value = "";
+      showScreen("newProject");
+    });
+
+    projectsFromDashboardButton.addEventListener("click", function() {
+      showScreen("projects");
+    });
+
+    newFromProjectsButton.addEventListener("click", function() {
+      ideaInput.value = "";
+      audienceInput.value = "";
+      showScreen("newProject");
+    });
+
+    downloadButton.addEventListener("click", function() {
+      downloadBrief();
+    });
+  </script>
+</body>
+</html>
